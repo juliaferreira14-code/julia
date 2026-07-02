@@ -1,41 +1,90 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guia de Segurança e Direitos Digitais</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<!-- MENU DE ACESSIBILIDADE -->
+<nav class="barra-acessibilidade" aria-label="Controles de Acessibilidade">
+    <button class="botao-controle" onclick="alterarFonte(2)" title="Aumentar texto">A+ Aumentar</button>
+    <button class="botao-controle" onclick="alterarFonte(-2)" title="Diminuir texto">A- Diminuir</button>
+    <button class="botao-controle botao-leitura" onclick="lerTexto()" id="btn-voz">�� Ouvir Página</button>
+    <button class="botao-controle" onclick="pararLeitura()">⏹️ Parar</button>
+</nav>
+/* --- MENU DE ACESSIBILIDADE --- */
+.barra-acessibilidade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #333;
+    color: white;
+    
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    z-index: 1000;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
 
-    <header class="barra-superior">
-        <div class="logo">Segurança Digital</div>
-        <a href="#ajuda" class="botao-ajuda-topo">Precisa de Ajuda?</a>
-    </header>
+.botao-controle {
+    background: white;
+    color: #333;
+    border: 2px solid var(--secundario);
+    padding: 10px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-    <section class="banner-inicio">
-        <div class="conteudo-banner">
-            <h1>Navegue na Internet com Confiança</h1>
-            <p>Descubra como se proteger de golpes e conheça os seus direitos no ambiente virtual de forma simples e clara.</p>
-            <a href="#ajuda" class="botao-ajuda-banner">Quero Ajuda Agora</a>
-        </div>
-    </section>
+.botao-controle:hover {
+    background: var(--secundario);
+}
 
-    <main class="container">
+.botao-leitura {
+    background: #28a745;
+    color: white;
+    border: none;
+}
+.banner h1 {
+    padding-top: 70px;
+}@media (max-width: 600px) {
+    .banner h1 {
+    padding-top: 80px;
+    }
+}<button class="botao-controle" onclick="pararLeitura()">Parar</button>
+<nav class="barra-acessibilidade" aria-label="Controles de Acessibilidade">
+<button class="botao-controle" title="Aumentar texto">A+ Aumentar</button>
+<button class="botao-controle" title="Diminuir texto">A- Diminuir</button>
+<button class="botao-controle botao-leitura" id="btn-voz">Ouvir Página</button>
+</nav>// TAMANHO DE FONTES
+let tamanhoFonteAtual = 16;
+const valorAdicionado = 2;
+const valorSubtraido = 2;
+<button id="btnAumentaTexto" class="botao-controle" title="Aumentar texto">A+ Aumentar</button>
+<button id="btnDiminuiTexto" class="botao-controle" title="Diminuir texto">A- Diminuir</button>
+let btnAumentaFonte = document.getElementById("btnAumentaTexto");
+let btnDiminuiFonte = document.getElementById("btnDiminuiTexto");
+btnAumentaFonte.addEventListener("click", aumentaFonte);
+btnDiminuiFonte.addEventListener("click", diminuiFonte);
+function aumentaFonte() {
+    tamanhoFonteAtual = tamanhoFonteAtual + valorAdicionado;
+    document.documentElement.style.fontSize = `${tamanhoFonteAtual}px`;
+}<main>
+    <!-- todo o conteúdo do site -->
+</main>
+// LEITURA DE TELA
+let lendo = false;
+function lerEmVozAlta() {
+    let conteudo = document.querySelector("main");
+    let texto = conteudo.innerText;
 
-        <section class="secao">
-            <h2>Conselhos Importantes</h2>
-            <p class="descricao-secao">Dicas rápidas que você deve lembrar no seu dia a dia:</p>
-            
-            <div class="lista-conselhos">
-                <div class="item-conselho">
-                    <strong>Desconfie de promessas fáceis:</strong> Prêmios, sorteios ou descontos exagerados geralmente são falsos.
-                </div>
-                <div class="item-conselho">
-                    <strong>Proteja suas senhas:</strong> Não use nomes de parentes ou datas de aniversário. Guarde-as em um lugar seguro fora do celular.
-                </div>
-                <div class="item-conselho">
-                    <strong>Pense antes de clicar:</strong> Links recebidos por mensagens de quem você não conhece podem ser perigosos.
-                </div>
-            </div>
-        </section>
+    let fala = new SpeechSynthesisUtterance(texto);
+
+    fala.lang = "pt-BR";
+    fala.onend = finalizarLeitura;
+
+    lendo = true;
+
+}
+
